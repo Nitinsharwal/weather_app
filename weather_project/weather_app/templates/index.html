@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+    <link rel="icon" type="image/x-icon" href="{% static 'weather-icon.png' %}">
+    <title>Weather App</title>
+</head>
+
+<body style="background-image: url('/static/bg-img.jpg'); background-size: cover;">
+    <div style="text-align: center; padding: 10px; background-size:cover;">
+        <h1 class="header"
+            style="color: rgb(255, 0, 0); font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; border-width: 0.2rem; border-style: solid; border-color: azure;">
+            Check Weather of your city</h1>
+        <form action="" method="POST">
+            {% csrf_token%}
+            <input type="text" style="border-width: 0.2rem; width: 30%; padding: 12px 20px;
+  margin: 8px 0; box-sizing: border-box; font-size: 2rem;" name="city" placeholder="Enter your city name"><br>
+            <button type="submit" style="  background-color: #04aa6d;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 20px;
+            border-radius: 5px;
+            border-width: 0.2rem;">Get Weather</button>
+            {% if data %}
+            <p
+                style="color: aqua; font-size: 2.6rem; font-style: italic; font-family: Georgia, 'Times New Roman', Times, serif;">
+                City : {{city}} </p>
+            <table border="4"
+                style="border: solid; border-radius: 10px; border-width: 0.2rem; border-color: black; font-size: 2rem; background-image: url('/static/frm-bg.jpg'); background-size: cover; width: 80%; height: 80%;"
+                cellspacing="0" align="center">
+                <tr>
+                    <td>Property</td>
+                    <td>Value</td>
+                </tr>
+                {% for x,y in data.items %}
+                <tr>
+                    <td id="{{x}}_property">{{x}}</td>
+                    <td id="{{x}}_value">{{y}}</td>
+                </tr>
+                {% endfor %}
+            </table>
+            {% endif %}
+        </form>
+    </div>
+    <script>
+        window.onload = function () {
+            // ---------------for value---------------------->>>
+            // --------------for temrature value
+            let kelvin = document.getElementById("temp_value").innerText;
+            let celcius = kelvin - 273.15;
+            document.getElementById("temp_value").innerText = celcius.toFixed(2) + " °C";
+            // --------------for max-temrature value
+            kelvin = document.getElementById("temp_max_value").innerText;
+            celcius = kelvin - 273.15;
+            document.getElementById("temp_max_value").innerText = celcius.toFixed(2) + " °C";
+            // --------------for min-temrature value
+            kelvin = document.getElementById("temp_min_value").innerText;
+            celcius = kelvin - 273.15;
+            document.getElementById("temp_min_value").innerText = celcius.toFixed(2) + " °C";
+            // --------------for feels--like-temrature value
+            kelvin = document.getElementById("feels_like_value").innerText;
+            celcius = kelvin - 273.15;
+            document.getElementById("feels_like_value").innerText = celcius.toFixed(2) + " °C";
+            // --------------for pressure-temrature value
+            kelvin = document.getElementById("pressure_value").innerText;
+            document.getElementById("pressure_value").innerText = kelvin + " hPa";
+            // ----------for humidity value
+            kelvin = document.getElementById("humidity_value").innerText;
+            document.getElementById("humidity_value").innerText = kelvin + " %";
+            // ----------for sea-level value
+            kelvin = document.getElementById("sea_level_value").innerText;
+            document.getElementById("sea_level_value").innerText = kelvin + " ft";
+            // ----------for sea-level value
+            kelvin = document.getElementById("grnd_level_value").innerText;
+            document.getElementById("grnd_level_value").innerText = kelvin + " ft";
+
+
+            // ---------------for Property---------------------->>>
+            document.getElementById("temp_property").innerText = "Temprature";
+            document.getElementById("feels_like_property").innerText = "Feels Like";
+            document.getElementById("temp_min_property").innerText = "Minimum Temprature";
+            document.getElementById("temp_max_property").innerText = "Maximum Temprature";
+            document.getElementById("pressure_property").innerText = "Air Pressure";
+            document.getElementById("humidity_property").innerText = "Humidity";
+            document.getElementById("sea_level_property").innerText = "Sea Level";
+            document.getElementById("grnd_level_property").innerText = "Ground Level";
+        };
+    </script>
+</body>
+
+</html>
